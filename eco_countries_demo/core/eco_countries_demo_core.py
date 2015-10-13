@@ -2,44 +2,79 @@ import os
 import copy
 import shutil
 import os.path
+import glob
 from geobricks_modis.core import modis_core as c
 from geobricks_processing.core import processing_core
 from geobricks_common.core.date import day_of_the_year_to_date
 from geobricks_downloader.core.downloader_core import Downloader
 from eco_countries_demo.config.processing_config import processing
 
-
 class ECOCountriesDownloader:
 
     years = None
     products = None
     countries = None
-    root = '/home/kalimaha/Desktop/'
+    root = os.path.expanduser('~')+'/Desktop/'
+
+    nena_codes = ','.join([
+        '4', #Algeria
+        '6', #Sudan
+        '21', #Bahrain
+        '74', #South Sudan
+        '91', #Gaza Strip
+        '102', #Abyei
+        '117', #Iran  (Islamic Republic of)
+        '118', #Iraq
+        '121', #Israel
+        '130', #Jordan
+        '137', #Kuwait
+        '141', #Lebanon
+        '145', #Libya
+        '159', #Mauritania
+        '169', #Morocco
+        '187', #Oman
+        '201', #Qatar
+        '215', #Saudi Arabia
+        '238', #Syrian Arab Republic
+        '248', #Tunisia
+        '255', #United Arab Emirates
+        '267', #West Bank
+        '268', #Western Sahara
+        '269', #Yemen
+        '40760', #Hala'ib triangle
+        '40762', #Ma'tan al-Sarra
+        '40766', #Egypt
+        '61013' #Ilemi triangle
+    ])
 
     def __init__(self):
         pass
 
     def download_ndvi(self):
-        self.products = ['MOD13A1']
-        self.years = ['2015']
-        self.countries = 'za'
+        self.products = ['MOD13A3']
+        self.years = ['2015', '2014', '2013', '2012',
+                      '2011', '2010', '2009', '2008', '2007', '2006',
+                      '2005', '2004', '2003', '2002', '2001', '2000']
+        self.countries = self.nena_codes
         self.__download()
 
     def process_ndvi(self):
-        self.products = ['MOD13A1']
-        self.years = ['2015']
-        self.countries = 'za'
-        self.__process('mod13a1')
+        self.products = ['MOD13A3']
+        self.years = ['2015', '2014', '2013', '2012',
+                      '2011', '2010', '2009', '2008', '2007', '2006',
+                      '2005', '2004', '2003', '2002', '2001', '2000']
+        self.countries = self.nena_codes
+        self.__process('mod13a3')
 
     def prepare_output_ndvi(self):
-        self.prepare_output('mod13a1')
+        self.prepare_output('mod13a3')
 
     def download_mydc13(self):
         self.products = ['MYD11C3']
         self.years = ['2014', '2013', '2012',
                       '2011', '2010', '2009', '2008', '2007', '2006',
                       '2005', '2004', '2003', '2002', '2001', '2000']
-        self.countries = 'eco'
+        self.countries =  self.nena_codes
         self.__download()
 
     def process_mydc13(self):
@@ -47,7 +82,7 @@ class ECOCountriesDownloader:
         self.years = ['2014', '2013', '2012',
                       '2011', '2010', '2009', '2008', '2007', '2006',
                       '2005', '2004', '2003', '2002', '2001', '2000']
-        self.countries = 'eco'
+        self.countries = self.nena_codes
         self.__process('myd11c3')
 
     def prepare_output_mydc13(self):
@@ -58,7 +93,7 @@ class ECOCountriesDownloader:
         self.years = ['2014', '2013', '2012',
                       '2011', '2010', '2009', '2008', '2007', '2006',
                       '2005', '2004', '2003', '2002', '2001', '2000']
-        self.countries = 'eco'
+        self.countries = self.nena_codes
         self.__process('mod16')
 
     def __download(self):
@@ -108,23 +143,28 @@ class ECOCountriesDownloader:
                         layers = c.list_layers_countries_subset(p, y, d['code'], self.countries)
                         for l in layers:
                             try:
-                                my_processing[product_code][0]['source_path'].append(self.root +
-                                                                                     p + '/' +
-                                                                                     y + '/' +
-                                                                                     d['code'] + '/' +
-                                                                                     l['file_name'])
+                                if os.path.exists(self.root + p + '/' + y + '/' + d['code'] + '/' + l['file_name']):
+                                    my_processing[product_code][0]['source_path'].append(self.root +
+                                                                                         p + '/' +
+                                                                                         y + '/' +
+                                                                                         d['code'] + '/' +
+                                                                                         l['file_name'])
+                                else:
+                                    print "Layer not found: " + l['file_name']
                             except AttributeError:
                                 my_processing[product_code][0]['source_path'] = []
-                                my_processing[product_code][0]['source_path'].append(self.root +
-                                                                                     p + '/' +
-                                                                                     y + '/' +
-                                                                                     d['code'] + '/' +
-                                                                                     l['file_name'])
+                                if os.path.exists(self.root + p + '/' + y + '/' + d['code'] + '/' + l['file_name']):
+                                    my_processing[product_code][0]['source_path'].append(self.root +
+                                                                                         p + '/' +
+                                                                                         y + '/' +
+                                                                                         d['code'] + '/' +
+                                                                                         l['file_name'])
                         for tmp_out in my_processing[product_code]:
                             tmp_out['output_path'] = self.root + p + '/' + y + '/' + d['code'] + '/PROCESSED/'
                         try:
                             for proc in my_processing[product_code]:
                                 proc["source_path"] = proc["source_path"] if "source_path" in proc else result
+                                print proc
                                 result = processing_core.process_obj(proc)
                         except Exception, e:
                             print '##################################################'
@@ -164,7 +204,7 @@ class ECOCountriesDownloader:
 dwld = ECOCountriesDownloader()
 
 dwld.download_ndvi()
-# dwld.process_ndvi()
+dwld.process_ndvi()
 dwld.prepare_output_ndvi()
 
 # dwld.download_mydc13()
