@@ -1,7 +1,7 @@
 import os
 import glob
 from geobricks_common.core.filesystem import get_filename
-
+#from eco_countries_demo.config.processing_config import processing
 
 
 def rename(path, from_basename, to_basename):
