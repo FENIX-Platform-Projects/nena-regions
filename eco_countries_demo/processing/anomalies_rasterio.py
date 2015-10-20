@@ -30,8 +30,7 @@ def calc_anomalies(basepath, layers, filename, epsg="3857"):
             dst.write_band(1, data.astype(rasterio.float32))
 
 
-def process_all():
-    basepath = '/media/'+getpass.getuser()+'/LaCie/NENA_REGION/MOD13A3'
+def process_all(basepath):
     layers = glob.glob(basepath + "/*.tif")
     calc_anomalies(basepath, layers, "MOD13A3")
 

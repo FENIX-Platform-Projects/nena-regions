@@ -27,8 +27,6 @@ def calc(basepath, layers, filename, epsg="3857"):
             dst.write_band(1, data.astype(rasterio.float32))
 
 
-def process_all():
-    print "-----Z-SCORE"
-    basepath = "/home/"+getpass.getuser()+"/Desktop/NENA_REGION/MOD13A3"
+def process_all(basepath):
     layers = glob.glob(basepath + "/anomalies/*.tif")
     calc(basepath, layers, "MOD13A3")

@@ -49,7 +49,7 @@ def calc(basepath, output_path, layers, epsg="3857"):
 
 
 
-def process_all():
+def process_all(basepath):
     # basepath = "/media/"+getpass.getuser()+"/LaCie/LaCie/ECO_COUNTRIES/MYD11C3"
     # layers = glob.glob(basepath + "/*.tif")
     # calc(basepath, output_path, layers)
@@ -64,7 +64,6 @@ def process_all():
     # layers = glob.glob(basepath + "/*.tif")
     # calc(basepath, output_path, layers)
 
-    basepath = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD13A3"
     output_path = basepath + "/anomalies_dpy"
     layers = glob.glob(basepath + "/*.tif")
     calc(basepath, output_path, layers)

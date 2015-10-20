@@ -31,8 +31,7 @@ def calc_monthly_average(basepath, filename, layers_by_month, epsg="3857"):
         with rasterio.open(output_path, 'w', **kwargs) as dst:
             dst.write_band(1, data.astype(rasterio.float32))
 
-def process_all():
-    basepath = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD13A3"
+def process_all(basepath):
     layers_by_month = get_monthly_layers(basepath + "/*.tif")
     calc_monthly_average(basepath + "/avg", "MOD13A3", layers_by_month)
 
