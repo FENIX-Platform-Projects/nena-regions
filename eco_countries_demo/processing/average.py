@@ -1,14 +1,10 @@
 import glob
 import os
+import getpass
 from geobricks_common.core.filesystem import get_filename
 from eco_countries_demo.processing.utils import get_monthly_layers
 from geobricks_gdal_calc.core.gdal_calc import calc_layers
 from eco_countries_demo.processing.utils import get_files
-
-
-basepath = "/home/vortex/Desktop/LAYERS/ECO_COUNTRIES/MOD13A3"
-
-
 
 def calc_monthly_average(basepath, filename, layers_by_month, epsg="3857"):
     print layers_by_month
@@ -22,7 +18,7 @@ def calc_monthly_average(basepath, filename, layers_by_month, epsg="3857"):
 
 
 
-
+basepath = "/home/"+getpass.getuser()+"/Desktop/NENA_REGION/MOD13A3"
 
 layers_by_month = get_monthly_layers(basepath + "/*.tif")
 calc_monthly_average(basepath + "/avg", "MOD13A3", layers_by_month)

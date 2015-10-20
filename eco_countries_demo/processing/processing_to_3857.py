@@ -1,6 +1,7 @@
 import glob
 import os
 import subprocess
+import getpass
 from geobricks_common.core.filesystem import get_filename
 
 
@@ -51,57 +52,57 @@ def add_gdaladdo(output_file_path):
 
 
 def process_mod11c3():
-    input_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MYD11C3_4326/"
-    output_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MYD11C3/"
+    input_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MYD11C3_4326/"
+    output_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MYD11C3/"
     process_tifs_warp(input_path, output_path)
 
-    input_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MYD11C3_4326/MYD11C3_ANOMALY"
-    output_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MYD11C3/MYD11C3_ANOMALY"
+    input_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MYD11C3_4326/MYD11C3_ANOMALY"
+    output_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MYD11C3/MYD11C3_ANOMALY"
     process_tifs_warp(input_path, output_path)
 
-    input_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MYD11C3_4326/MYD11C3_AVG"
-    output_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MYD11C3/MYD11C3_AVG"
+    input_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MYD11C3_4326/MYD11C3_AVG"
+    output_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MYD11C3/MYD11C3_AVG"
     process_tifs_warp(input_path, output_path)
 
-    input_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MYD11C3_4326/MYD11C3_ZSCORE"
-    output_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MYD11C3/MYD11C3_ZSCORE"
+    input_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MYD11C3_4326/MYD11C3_ZSCORE"
+    output_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MYD11C3/MYD11C3_ZSCORE"
     process_tifs_warp(input_path, output_path)
 
-    input_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MYD11C3_4326/MYD11C3_SD"
-    output_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MYD11C3/MYD11C3_SD"
+    input_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MYD11C3_4326/MYD11C3_SD"
+    output_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MYD11C3/MYD11C3_SD"
     process_tifs_warp(input_path, output_path)
 
 
 def process_mod16():
-    input_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD16_bk/ET/ET/"
-    output_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD16/ET/ET/"
+    input_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD16_bk/ET/ET/"
+    output_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD16/ET/ET/"
     process_tifs_translate(input_path, output_path)
 
-    input_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD16_bk/ET/ET/ET_ANOMALY"
-    output_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD16/ET/ET/ET_ANOMALY"
+    input_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD16_bk/ET/ET/ET_ANOMALY"
+    output_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD16/ET/ET/ET_ANOMALY"
     process_tifs_translate(input_path, output_path)
 
-    input_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD16_bk/ET/ET/ET_AVG"
-    output_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD16/ET/ET/ET_AVG"
+    input_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD16_bk/ET/ET/ET_AVG"
+    output_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD16/ET/ET/ET_AVG"
     process_tifs_translate(input_path, output_path)
 
-    input_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD16_bk/ET/ET/ET_ZSCORE"
-    output_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD16/ET/ET/ET_ZSCORE"
+    input_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD16_bk/ET/ET/ET_ZSCORE"
+    output_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD16/ET/ET/ET_ZSCORE"
     process_tifs_translate(input_path, output_path)
 
 
 
 def process_MOD13A3():
-    input_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD13A3_bk/"
-    output_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD13A3"
+    input_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD13A3_bk/"
+    output_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD13A3"
     process_tifs_translate(input_path, output_path)
 
-    input_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD13A3_bk/MOD13A3_ANOMALY"
-    output_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD13A3/MOD13A3_ANOMALY"
+    input_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD13A3_bk/MOD13A3_ANOMALY"
+    output_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD13A3/MOD13A3_ANOMALY"
     process_tifs_translate(input_path, output_path)
 
-    input_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD13A3_bk/MOD13A3_AVG"
-    output_path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD13A3/MOD13A3_AVG"
+    input_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD13A3_bk/MOD13A3_AVG"
+    output_path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD13A3/MOD13A3_AVG"
     process_tifs_translate(input_path, output_path)
 
 

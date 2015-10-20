@@ -29,7 +29,7 @@ class ECOCountriesDownloader:
             '2015', '2014','2013',
             '2012', '2011', '2010', '2009', '2008', '2007', '2006','2005', '2004', '2003',
             '2002', '2001', '2000'
-            ]
+        ]
         self.countries = nena_codes
         self.__download()
     def process_mod13a3(self):
@@ -38,7 +38,7 @@ class ECOCountriesDownloader:
             '2015', '2014','2013',
             '2012', '2011', '2010', '2009', '2008', '2007', '2006','2005', '2004', '2003',
             '2002', '2001', '2000'
-            ]
+        ]
         self.countries = nena_codes
         self.__process('mod13a3')
     def prepare_output_mod13a3(self):
@@ -172,10 +172,10 @@ class ECOCountriesDownloader:
 dwld = ECOCountriesDownloader()
 #dwld.download_mod13a3()
 #dwld.process_mod13a3()
-dwld.prepare_output_mod13a3()
+# dwld.prepare_output_mod13a3()
 
 #dwld.download_myd11c3()
-#dwld.process_myd11c3()
+dwld.process_myd11c3()
 
 #dwld.download_mydc13()
 #dwld.prepare_output_mydc13()

@@ -39,7 +39,7 @@ def calc_variance(basepath, filename, layers_by_month, epsg="3857"):
 
 
 def process_all():
-    basepath = "/home/vortex/Desktop/LAYERS/ECO_COUNTRIES/MOD13A3"
+    basepath = "/home/"+getpass.getuser()+"/Desktop/LAYERS/ECO_COUNTRIES/MOD13A3"
     layers_by_month = get_monthly_layers(basepath + "/anomalies/*.tif")
     calc_variance(basepath + "/variance", "MOD13A3", layers_by_month)
 

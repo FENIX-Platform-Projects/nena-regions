@@ -1,4 +1,5 @@
 import glob
+import getpass
 import rasterio
 from eco_countries_demo.processing.utils_rasterio import initialize_rasterio_raster
 from eco_countries_demo.processing.utils import get_month_by_filename, get_date_by_filename
@@ -28,6 +29,6 @@ def calc(basepath, layers, filename, epsg="3857"):
 
 def process_all():
     print "-----Z-SCORE"
-    basepath = "/home/vortex/Desktop/LAYERS/ECO_COUNTRIES/MOD13A3"
+    basepath = "/home/"+getpass.getuser()+"/Desktop/NENA_REGION/MOD13A3"
     layers = glob.glob(basepath + "/anomalies/*.tif")
     calc(basepath, layers, "MOD13A3")

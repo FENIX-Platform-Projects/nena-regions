@@ -1,10 +1,11 @@
 import os
+import getpass
 from geobricks_common.core.filesystem import get_filename
 from geobricks_gdal_calc.core.gdal_calc import calc_layers
 from eco_countries_demo.processing.utils import get_files
 
 
-basepath = "/home/vortex/Desktop/LAYERS/ECO_COUNTRIES/MOD13A3"
+basepath = '/media/'+getpass.getuser()+'/LaCie/NENA_REGION/'
 files_path = get_files(basepath + "/*.tif")
 avg_file_path = basepath + "/avg/MOD13A3_avg.tif"
 
@@ -19,4 +20,4 @@ for f in files_path:
     output_path = os.path.join(os.path.dirname(os.path.realpath(f)), "anomalies", "MOD13A3_anomalies_" + date + "_3857.tif")
 
     # calculation
-    result = calc_layers([f, avg_file_path], output_path, "diff", ['--NoDataValue=-3000'])
+    #result = calc_layers([f, avg_file_path], output_path, "diff", ['--NoDataValue=-3000'])

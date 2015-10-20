@@ -1,5 +1,6 @@
 import os
 import glob
+import getpass
 from geobricks_common.core.filesystem import get_filename
 #from eco_countries_demo.config.processing_config import processing
 
@@ -13,19 +14,23 @@ def rename(path, from_basename, to_basename):
             os.rename(f, path + "/" + new_filename)
 
 
-#path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MYD11C3/MYD11C3_ZSCORE/"
+
+path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MYD11C3/"
+rename(path, "MYD11C3", "LST_6km_MYD11C3")
+
+#path = "/media/"+getpass.getuser()+"/LaCie/LaCie/ECO_COUNTRIES/MYD11C3/MYD11C3_ZSCORE/"
 #rename(path, "6km_ZScore", "ZScore_6km")
 #
-#path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD16/ET/ET/ET_ANOMALY/"
+#path = "/media/"+getpass.getuser()+"/LaCie/LaCie/ECO_COUNTRIES/MOD16/ET/ET/ET_ANOMALY/"
 #rename(path, "6km_Anomaly", "Anomaly_6km")
 
-# path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD16/ET/ET/ET_ANOMALY/"
+# path = "/media/"+getpass.getuser()+"/LaCie/LaCie/ECO_COUNTRIES/MOD16/ET/ET/ET_ANOMALY/"
 # rename(path, "MOD16A2", "MOD16A2_")
 #
-#path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MOD16/ET/ET/ET_SD/"
+#path = "/media/"+getpass.getuser()+"/LaCie/LaCie/ECO_COUNTRIES/MOD16/ET/ET/ET_SD/"
 #rename(path, "MOD16A2", "SD#_MOD16A2")
 #
-#path = "/media/vortex/LaCie/LaCie/ECO_COUNTRIES/MYD11C3/MYD11C3_ZSCORE/"
+#path = "/media/"+getpass.getuser()+"/LaCie/LaCie/ECO_COUNTRIES/MYD11C3/MYD11C3_ZSCORE/"
 #rename(path, "MYD11C3", "ZScore_MYD11C3")
 
 #

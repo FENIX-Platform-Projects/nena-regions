@@ -1,4 +1,6 @@
 import rasterio
+import os
+import getpass
 from eco_countries_demo.processing.utils_rasterio import initialize_rasterio_raster
 from eco_countries_demo.processing.utils import get_monthly_layers
 
@@ -22,7 +24,6 @@ def calc_monthly_average(basepath, filename, layers_by_month, epsg="3857"):
 
             data = data + r.read_band(1).astype(float)
 
-
         data = data / len(layers_by_month[month])
 
         # writing
@@ -30,9 +31,8 @@ def calc_monthly_average(basepath, filename, layers_by_month, epsg="3857"):
         with rasterio.open(output_path, 'w', **kwargs) as dst:
             dst.write_band(1, data.astype(rasterio.float32))
 
-
 def process_all():
-    basepath = "/home/vortex/Desktop/LAYERS/ECO_COUNTRIES/MOD13A3"
+    basepath = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MOD13A3"
     layers_by_month = get_monthly_layers(basepath + "/*.tif")
     calc_monthly_average(basepath + "/avg", "MOD13A3", layers_by_month)
 
