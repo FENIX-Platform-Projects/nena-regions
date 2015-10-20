@@ -6,6 +6,8 @@ from eco_countries_demo.processing.utils import get_month_by_filename, get_date_
 
 
 def calc(basepath, layers, filename, epsg="3857"):
+    print "-----Standard Deviation"
+
     for layer in layers:
         date = get_date_by_filename(layer)
         month = get_month_by_filename(layer)
