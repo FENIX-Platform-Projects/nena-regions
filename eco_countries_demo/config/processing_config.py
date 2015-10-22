@@ -8,18 +8,18 @@ processing = {
                 }
             ]
         },
-        # {
-        #     "band": 1,
-        #     "output_file_name": "merge",
-        #     "process": [
-        #         {
-        #             "gdal_merge": {
-        #                 "prefix": "gdal_merge_",
-        #                 "extension": "tif"
-        #             }
-        #         }
-        #     ]
-        # },
+        {
+            "band": 1,
+            "output_file_name": "merge",
+            "process": [
+                {
+                    "gdal_merge": {
+                        "prefix": "gdal_merge_",
+                        "extension": "tif"
+                    }
+                }
+            ]
+        },
         {
             "band": 1,
             "output_file_name": "semi.tif",

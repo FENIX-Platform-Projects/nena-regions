@@ -22,7 +22,7 @@ def calc_monthly_average(basepath, filename, layers_by_month, epsg="3857"):
             if data is None:
                 data, kwargs = initialize_rasterio_raster(r, rasterio.float32)
 
-            data = data + r.read_band(1).astype(float)
+            data = data + r.*(1).astype(float)
 
         data = data / len(layers_by_month[month])
 

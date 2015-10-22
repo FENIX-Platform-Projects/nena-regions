@@ -15,8 +15,8 @@ def rename(path, from_basename, to_basename):
 
 
 
-path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/MYD11C3/"
-rename(path, "MYD11C3", "LST_6km_MYD11C3")
+path = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/NENA_MOD13A3/NENA_MOD13A3_ANOMALY_DPY/"
+rename(path, "MOD13A3", "NDVI_Anomaly_DPY_1km_MOD13A3")
 
 #path = "/media/"+getpass.getuser()+"/LaCie/LaCie/ECO_COUNTRIES/MYD11C3/MYD11C3_ZSCORE/"
 #rename(path, "6km_ZScore", "ZScore_6km")

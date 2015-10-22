@@ -37,8 +37,8 @@ def calc(basepath, output_path, layers, epsg="3857"):
             if data is None:
                 data, kwargs = initialize_rasterio_raster(r, rasterio.float32)
 
-
-            data = ((r_data - r_prev_data) / r_prev_data) * 100
+            # data = ((r_data - r_prev_data) / r_prev_data) * 100
+            data = r_data - r_prev_data
 
             # writing
             output_layer_path = output_path + "/" + filename + ".tif"
