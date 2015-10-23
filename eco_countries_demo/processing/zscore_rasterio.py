@@ -1,13 +1,11 @@
 import glob
-import getpass
 import rasterio
 from eco_countries_demo.processing.utils_rasterio import initialize_rasterio_raster
 from eco_countries_demo.processing.utils import get_month_by_filename, get_date_by_filename
 
 
 def calc(basepath, layers, filename, epsg="3857"):
-    print "-----Standard Deviation"
-
+    print "-----Z-SCORE"
     for layer in layers:
         date = get_date_by_filename(layer)
         month = get_month_by_filename(layer)
@@ -21,6 +19,7 @@ def calc(basepath, layers, filename, epsg="3857"):
         data, kwargs = initialize_rasterio_raster(r, rasterio.float32)
         r_band = r.read_band(1)
         r_sd_band = r_sd.read_band(1)
+
         data = (r_band.astype(float) / r_sd_band.astype(float))
 
         # writing
@@ -28,7 +27,6 @@ def calc(basepath, layers, filename, epsg="3857"):
         with rasterio.open(output_path, 'w', **kwargs) as dst:
             dst.write_band(1, data.astype(rasterio.float32))
 
-
-def process_all(basepath):
-    layers = glob.glob(basepath + "/anomalies/*.tif")
-    calc(basepath, layers, "MOD13A3")
+def process_all(basepath, basename):
+    layers = glob.glob(basepath + basename + "/anomalies/*.tif")
+    calc(basepath + basename, layers, basename)

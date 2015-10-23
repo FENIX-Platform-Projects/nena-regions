@@ -8,6 +8,9 @@ from eco_countries_demo.processing.utils import get_monthly_layers
 def calc_monthly_average(basepath, filename, layers_by_month, epsg="3857"):
     print "-----Averages"
 
+    if not os.path.exists(basepath):
+        os.makedirs(basepath)
+
     for month in layers_by_month:
         output_path = basepath + "/" + filename + "_" + month + "_" + epsg + ".tif"
 
@@ -22,7 +25,7 @@ def calc_monthly_average(basepath, filename, layers_by_month, epsg="3857"):
             if data is None:
                 data, kwargs = initialize_rasterio_raster(r, rasterio.float32)
 
-            data = data + r.*(1).astype(float)
+            data = data + r.read_band(1).astype(float)
 
         data = data / len(layers_by_month[month])
 
@@ -31,8 +34,8 @@ def calc_monthly_average(basepath, filename, layers_by_month, epsg="3857"):
         with rasterio.open(output_path, 'w', **kwargs) as dst:
             dst.write_band(1, data.astype(rasterio.float32))
 
-def process_all(basepath):
-    layers_by_month = get_monthly_layers(basepath + "/*.tif")
-    calc_monthly_average(basepath + "/avg", "MOD13A3", layers_by_month)
 
+def process_all(basepath, basename):
+    layers_by_month = get_monthly_layers(basepath + basename + "/*.tif")
+    calc_monthly_average(basepath + basename + "/avg", basename, layers_by_month)
 

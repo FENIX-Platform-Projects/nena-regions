@@ -1,7 +1,6 @@
 import glob
-import rasterio
 import os
-import getpass
+import rasterio
 from eco_countries_demo.processing.utils_rasterio import initialize_rasterio_raster
 from eco_countries_demo.processing.utils import get_month_by_filename, get_date_by_filename
 
@@ -15,6 +14,7 @@ def calc_anomalies(basepath, layers, filename, epsg="3857"):
         avg_path = basepath + "/avg/" + filename + "_" + month + "_" + epsg + ".tif"
         output_path = basepath + "/anomalies/" + filename + "_" + date + "_" + epsg + ".tif"
 
+
         # if "201207" in layer:
         print "Processing: ", layer, " ", avg_path
         r = rasterio.open(layer)
@@ -22,12 +22,14 @@ def calc_anomalies(basepath, layers, filename, epsg="3857"):
         data, kwargs = initialize_rasterio_raster(r, rasterio.float32)
         r_band = r.read_band(1)
         r_avg_band = r_avg.read_band(1)
-        data = r_band.astype(float) - r_avg_band.astype(float)
+
+        data = ((r_band.astype(float) - r_avg_band.astype(float)) / r_avg_band.astype(float)) * 100
 
         # writing
         print "Writing: ", output_path
         with rasterio.open(output_path, 'w', **kwargs) as dst:
             dst.write_band(1, data.astype(rasterio.float32))
+
 
 def process_all(basepath, basename):
     layers = glob.glob(basepath + basename + "/*.tif")

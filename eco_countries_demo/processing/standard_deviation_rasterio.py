@@ -2,10 +2,10 @@ import rasterio
 from eco_countries_demo.processing.utils_rasterio import initialize_rasterio_raster
 from eco_countries_demo.processing.utils import get_monthly_layers
 import numpy
-import getpass
 
-def calc_sd(basepath, filename, layers_by_month, epsg="3857"):
-    print "-----Standard Deviation"
+
+def calc_variance(basepath, filename, layers_by_month, epsg="3857"):
+    print "-----SD"
 
     for month in layers_by_month:
         print month
@@ -37,7 +37,6 @@ def calc_sd(basepath, filename, layers_by_month, epsg="3857"):
         with rasterio.open(output_path, 'w', **kwargs) as dst:
             dst.write_band(1, data.astype(rasterio.float32))
 
-
-def process_all(basepath):
-    layers_by_month = get_monthly_layers(basepath + "/anomalies/*.tif")
-    calc_sd(basepath + "/sd", "MOD13A3", layers_by_month)
+def process_all(basepath, basename):
+    layers_by_month = get_monthly_layers(basepath + basename + "/anomalies/*.tif")
+    calc_variance(basepath + basename + "/sd", basename, layers_by_month)

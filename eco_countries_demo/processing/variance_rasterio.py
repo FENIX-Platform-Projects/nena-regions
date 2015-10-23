@@ -38,8 +38,7 @@ def calc_variance(basepath, filename, layers_by_month, epsg="3857"):
                 dst.write_band(1, data.astype(rasterio.float32))
 
 
-def process_all():
-    basepath = "/home/"+getpass.getuser()+"/Desktop/LAYERS/ECO_COUNTRIES/MOD13A3"
-    layers_by_month = get_monthly_layers(basepath + "/anomalies/*.tif")
-    calc_variance(basepath + "/variance", "MOD13A3", layers_by_month)
+def process_all(basepath, basename):
+    layers_by_month = get_monthly_layers(basepath + basename + "/anomalies/*.tif")
+    calc_variance(basepath + basename + "/variance", basename, layers_by_month)
 

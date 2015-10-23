@@ -16,16 +16,16 @@ def calc(basepath, output_path, layers, epsg="3857"):
         year = get_year_by_filename(layer)
 
         data = None
-        if (int(year) >= 2006):
-            month = get_month_by_filename(layer)
-            filename = get_filename(layer)
-            base_filename = get_base_filename(filename)
-            yearPrev = str(int(year) - 1)
+        month = get_month_by_filename(layer)
+        filename = get_filename(layer)
+        base_filename = get_base_filename(filename)
+        yearPrev = str(int(year) - 1)
 
-            layerPrev = basepath + "/" + base_filename + "_" + yearPrev + month + "_" + epsg + ".tif"
+        layerPrev = basepath + "/" + base_filename + "_" + yearPrev + month + "_" + epsg + ".tif"
 
-            print "Processing: ", layer, layerPrev
+        print "Processing: ", layer, layerPrev
 
+        try:
             print "Reading: ",  layer
             r = rasterio.open(layer)
             r_data = r.read_band(1).astype(float)
@@ -41,10 +41,11 @@ def calc(basepath, output_path, layers, epsg="3857"):
 
             # writing
             output_layer_path = output_path + "/" + filename + ".tif"
-
             print "Writing: ", output_layer_path
             with rasterio.open(output_layer_path, 'w', **kwargs) as dst:
                 dst.write_band(1, data.astype(rasterio.float32))
+        except Exception, e:
+            print e
 
 def process_all(basepath, basename):
     output_path = basepath + basename + "/anomalies_dpy"
