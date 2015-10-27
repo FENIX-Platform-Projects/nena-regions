@@ -23,11 +23,15 @@ def calc_variance(basepath, filename, layers_by_month, epsg="3857"):
                 data, kwargs = initialize_rasterio_raster(r, rasterio.float32)
 
             band_data = r.read_band(1).astype(float)
+            nodata = 0
+            index1 = (band_data != nodata)
+            band_data = index1 * band_data
 
             sq = (band_data * band_data)
 
             # sum of squares
             data = data + sq
+
 
         # divide by n-1
         data = numpy.sqrt(data / (len(layers_by_month[month]) - 1))

@@ -20,6 +20,13 @@ def calc(basepath, layers, filename, epsg="3857"):
         r_band = r.read_band(1)
         r_sd_band = r_sd.read_band(1)
 
+
+        nodata = 0
+        index1 = (r_band != nodata)
+        index2 = (r_sd_band != nodata)
+        r_band = index1 * index2 * r_band
+        r_sd_band = index1 * index2 * r_sd_band
+
         data = (r_band.astype(float) / r_sd_band.astype(float))
 
         # writing

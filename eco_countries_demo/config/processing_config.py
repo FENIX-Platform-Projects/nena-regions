@@ -10,50 +10,21 @@ processing = {
         },
         {
             "band": 1,
-            "output_file_name": "merge",
+            "output_file_name": "final.tif",
             "process": [
-                {
-                    "gdal_merge": {
-                        "prefix": "gdal_merge_",
-                        "extension": "tif"
-                    }
-                }
-            ]
-        },
-        {
-            "band": 1,
-            "output_file_name": "semi.tif",
-            "process": [
-                {
-                    "get_pixel_size" : "{{PIXEL_SIZE}}"
-                },
                 {
                     "gdalwarp": {
                         "opt": {
                             "-multi": "",
                             "-overwrite": "",
                             "-of": "GTiff",
-                            "-s_srs": "'+proj=sinu +R=6371007.181 +nadgrids=@null +wktext'",
+                            "-s_srs": "EPSG:4326",
+                            "-t_srs": "EPSG:3857",
                             "-co": "'TILED=YES'",
-                            "-t_srs": "EPSG:3857"
+                            "-co": "'COMPRESS=DEFLATE'"
                         },
                         "prefix": "gdalwarp_",
                         "extension": "tif"
-                    }
-                }
-            ]
-        },
-        {
-            "band": 1,
-            "output_file_name": "final.tif",
-            "process": [
-                {
-                    "gdal_translate": {
-                        "opt": {
-                            "-a_nodata": "-3000",
-                            "-co": "'TILED=YES'",
-                            "-co": "'COMPRESS=DEFLATE'"
-                        }
                     }
                 }
             ]

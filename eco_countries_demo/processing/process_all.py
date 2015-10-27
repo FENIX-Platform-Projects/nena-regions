@@ -23,7 +23,9 @@ import getpass
 # Anomaly AVG: %
 # Anomaly DPY: %
 
-basepath = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/"
+#basepath = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/"
+basepath = "/home/"+getpass.getuser()+"/Desktop/NENA_REGION/"
+
 # basename = "CHIRPS"
 # average_rasterio.process_all(basepath, basename)
 # anomalies_rasterio_percentage.process_all(basepath, basename)
@@ -34,9 +36,9 @@ basepath = "/media/"+getpass.getuser()+"/LaCie/NENA_REGION/"
 
 # TEMPERATURE
 basename = "MYD11C3"
-average_rasterio.process_all(basepath, basename)
-anomalies_rasterio_diff.process_all(basepath, basename)
-anomaly_dpy_rasterio_diff.process_all(basepath, basename)
+# average_rasterio.process_all(basepath, basename)
+#anomalies_rasterio_diff.process_all(basepath, basename)
+#anomaly_dpy_rasterio_diff.process_all(basepath, basename)
 standard_deviation_rasterio.process_all(basepath, basename)
 zscore_rasterio.process_all(basepath, basename)
 

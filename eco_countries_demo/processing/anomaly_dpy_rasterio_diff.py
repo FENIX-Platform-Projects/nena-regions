@@ -37,6 +37,12 @@ def calc(basepath, output_path, layers, epsg="3857"):
             if data is None:
                 data, kwargs = initialize_rasterio_raster(r, rasterio.float32)
 
+
+            nodata = 0
+            index1 = (r_data != nodata)
+            index2 = (r_prev_data != nodata)
+            r_data = index1 * index2 * r_data
+            r_prev_data = index1 * index2 * r_prev_data
             data = r_data - r_prev_data
 
             # writing

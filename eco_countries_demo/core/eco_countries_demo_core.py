@@ -2,6 +2,8 @@ import os
 import copy
 import shutil
 import os.path
+import getpass
+import glob
 from geobricks_modis.core import modis_core as c
 from geobricks_processing.core import processing_core
 from geobricks_common.core.date import day_of_the_year_to_date
@@ -14,7 +16,7 @@ class ECOCountriesDownloader:
     years = None
     products = None
     countries = None
-    root = '/home/vortex/Desktop/nena/'
+    root = '/home/'+getpass.getuser()+'/Desktop/NENA_REGION/'
 
     def __init__(self):
         pass
@@ -34,7 +36,7 @@ class ECOCountriesDownloader:
     def prepare_output_ndvi(self):
         self.prepare_output('mod13a1')
 
-    def download_mydc13(self):
+    def download_myd113(self):
         self.products = ['MYD11C3']
         self.years = ['2014', '2013', '2012',
                       '2011', '2010', '2009', '2008', '2007', '2006',
@@ -42,7 +44,7 @@ class ECOCountriesDownloader:
         self.countries = 'eco'
         self.__download()
 
-    def process_mydc13(self):
+    def process_myd113(self):
         self.products = ['MYD11C3']
         self.years = ['2014', '2013', '2012',
                       '2011', '2010', '2009', '2008', '2007', '2006',
@@ -50,7 +52,7 @@ class ECOCountriesDownloader:
         self.countries = 'eco'
         self.__process('myd11c3')
 
-    def prepare_output_mydc13(self):
+    def prepare_output_myd113(self):
         self.prepare_output('myd11c3')
 
     def process_mod16(self):
@@ -94,6 +96,48 @@ class ECOCountriesDownloader:
                 raise Exception('Please provide a valid "countries" comma separated string.')
 
     def __process(self, product_code):
+
+        base_path = os.path.join(self.root, product_code.upper(), 'RAW')
+        print os.path.join(self.root, product_code, 'RAW', '*')
+
+        folders_years = glob.glob(os.path.join(base_path, '*'))
+
+        print folders_years
+        for folder_year in folders_years:
+            folders_days = glob.glob(os.path.join(folder_year, '*'))
+            # print folders_days
+            for folder_day in folders_days:
+                my_processing = copy.deepcopy(processing)
+                my_processing[product_code][0]['source_path'] = None
+                layers = glob.glob(os.path.join(folder_day, '*.hdf'))
+                shutil.rmtree(folder_day + '/PROCESSED/')
+                for l in layers:
+                    try:
+                        my_processing[product_code][0]['source_path'].append(l)
+                    except AttributeError:
+                        my_processing[product_code][0]['source_path'] = []
+                        my_processing[product_code][0]['source_path'].append(l)
+
+                for tmp_out in my_processing[product_code]:
+                    tmp_out['output_path'] = folder_day + '/PROCESSED/'
+                try:
+                    for proc in my_processing[product_code]:
+                        proc["source_path"] = proc["source_path"] if "source_path" in proc else result
+                        result = processing_core.process_obj(proc)
+                except Exception, e:
+                    print '##################################################'
+                    print e
+                    print '##################################################'
+                print 'Processing done.'
+
+                # print glob.glob(os.path.join(folder_day, '*.hdf'))
+
+
+
+
+
+
+    def __process2(self, product_code):
         if self.products is not None and self.years is not None and self.countries is not None:
             for p in self.products:
                 for y in self.years:
@@ -120,6 +164,7 @@ class ECOCountriesDownloader:
                                                                                      y + '/' +
                                                                                      d['code'] + '/' +
                                                                                      l['file_name'])
+
                         for tmp_out in my_processing[product_code]:
                             tmp_out['output_path'] = self.root + p + '/' + y + '/' + d['code'] + '/PROCESSED/'
                         try:
@@ -163,10 +208,10 @@ class ECOCountriesDownloader:
 
 dwld = ECOCountriesDownloader()
 
-dwld.download_ndvi()
+#dwld.download_ndvi()
 # dwld.process_ndvi()
 #dwld.prepare_output_ndvi()
 
 # dwld.download_mydc13()
-# dwld.process_mydc13()
-# dwld.prepare_output_mydc13()
+dwld.process_myd113()
+dwld.prepare_output_myd113()
